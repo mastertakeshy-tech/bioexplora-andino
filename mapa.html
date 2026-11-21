@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mapa de pisos térmicos · BioExplora Andino</title>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<header class="barra-superior">Mapa de pisos térmicos</header>
+
+<main class="contenido">
+  <div id="mapa-pisos" role="group" aria-label="Pisos térmicos de los Andes"></div>
+
+  <section aria-live="polite">
+    <p class="saludo" id="piso-seleccionado">Piso seleccionado: ninguno</p>
+    <div class="lista-especies" id="especies">
+      <div class="tarjeta"><p>Elige un piso térmico para ver sus especies.</p></div>
+    </div>
+  </section>
+</main>
+
+<nav class="nav-inferior" aria-label="Navegación principal">
+  <a href="index.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10.5 12 3l9 7.5V21H3z"/></svg>
+    Inicio
+  </a>
+  <a href="mapa.html" class="activo" aria-current="page">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+    Mapa
+  </a>
+  <a href="#especies">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21C7 17 4 13 4 9a8 8 0 0 1 16 0c0 4-3 8-8 12z" transform="rotate(45 12 12)"/></svg>
+    Especies
+  </a>
+  <a href="quiz.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.4 2.3c-.8.35-.9 1-.9 1.7"/><circle cx="12" cy="16.8" r="0.5"/></svg>
+    Quiz
+  </a>
+</nav>
+
+<script src="js/data.js"></script>
+<script src="js/comun.js"></script>
+<script>
+  const contMapa = document.getElementById("mapa-pisos");
+  const contLista = document.getElementById("especies");
+  const etiqueta = document.getElementById("piso-seleccionado");
+
+  PISOS.forEach((piso) => {
+    const n = ESPECIES.filter((e) => e.piso === piso.id).length;
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "piso";
+    btn.style.background = piso.color;
+    btn.setAttribute("aria-pressed", "false");
+    btn.innerHTML = "<span>" + piso.nombre + "<small>" + piso.rango + "</small></span><span>" + n + (n === 1 ? " especie" : " especies") + "</span>";
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".piso").forEach((b) => b.setAttribute("aria-pressed", "false"));
+      btn.setAttribute("aria-pressed", "true");
+      etiqueta.textContent = "Piso seleccionado: " + piso.nombre + " (" + piso.rango + ")";
+      mostrarEspecies(piso.id);
+    });
+    contMapa.appendChild(btn);
+  });
+
+  function mostrarEspecies(pisoId) {
+    contLista.innerHTML = "";
+    ESPECIES.filter((e) => e.piso === pisoId).forEach((esp) => {
+      const a = document.createElement("a");
+      a.className = "ficha-mini";
+      a.href = "especie.html?id=" + esp.id;
+      a.innerHTML =
+        '<span><span class="nombre">' + esp.nombre + "</span><br>" +
+        '<span class="detalle">' + esp.tipo + " · " + esp.estado + "</span></span>" +
+        '<span class="etiqueta">' + (esp.audio ? "Audio disponible" : "Solo lectura") + "</span>";
+      contLista.appendChild(a);
+    });
+  }
+</script>
+</body>
+</html>

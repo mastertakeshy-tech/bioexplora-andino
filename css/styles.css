@@ -1,0 +1,248 @@
+:root {
+  --verde-900: #1b4332;
+  --verde-700: #2d6a4f;
+  --verde-500: #52b788;
+  --verde-100: #d8f3dc;
+  --naranja: #e8871e;
+  --naranja-oscuro: #c96f0a;
+  --texto: #21312a;
+  --fondo: #f4f9f4;
+  --borde: #d5e6da;
+  --radio: 14px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: "Segoe UI", Verdana, sans-serif;
+  background: var(--fondo);
+  color: var(--texto);
+  font-size: 17px;
+  line-height: 1.6;
+  min-height: 100dvh;
+  padding-bottom: 84px;
+}
+
+img, video { max-width: 100%; display: block; }
+
+a { color: var(--verde-700); }
+
+:focus-visible {
+  outline: 3px solid var(--naranja);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+button { cursor: pointer; font: inherit; }
+
+/* ---------- Encabezado ---------- */
+.barra-superior {
+  background: var(--verde-900);
+  color: #fff;
+  padding: 14px 20px;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.contenido {
+  max-width: 540px;
+  margin: 0 auto;
+  padding: 20px 16px 32px;
+}
+
+/* ---------- Portada ---------- */
+.portada {
+  border-radius: var(--radio);
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.portada img { width: 100%; }
+
+h1 { font-size: 1.5rem; line-height: 1.25; margin-bottom: 6px; }
+h2 { font-size: 1.2rem; margin-bottom: 10px; }
+
+.saludo { font-weight: 600; margin-bottom: 14px; }
+
+/* ---------- Botones ---------- */
+.boton {
+  display: block;
+  width: 100%;
+  padding: 14px 18px;
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 1rem;
+  text-align: center;
+  text-decoration: none;
+  margin-bottom: 12px;
+  min-height: 48px;
+}
+.boton-naranja { background: var(--naranja); color: #fff; }
+.boton-naranja:hover { background: var(--naranja-oscuro); }
+.boton-verde { background: #8fbf9f; color: #fff; }
+.boton-verde:hover { background: #79ab8b; }
+.boton-contorno {
+  background: #fff;
+  color: var(--verde-700);
+  border: 2px solid var(--verde-700);
+}
+
+/* ---------- Tarjetas ---------- */
+.tarjeta {
+  background: #fff;
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  padding: 16px;
+  margin-bottom: 12px;
+}
+.tarjeta h2 { color: var(--verde-900); }
+
+.barra-progreso {
+  background: var(--verde-100);
+  border-radius: 999px;
+  height: 12px;
+  overflow: hidden;
+  margin: 8px 0;
+}
+.barra-progreso > span {
+  display: block;
+  height: 100%;
+  background: var(--naranja);
+  border-radius: 999px;
+  transition: width 0.4s ease-out;
+}
+
+/* ---------- Pisos térmicos ---------- */
+.piso {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 10px;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: #17332a;
+  text-align: left;
+  min-height: 56px;
+}
+.piso small { display: block; font-weight: 400; font-size: 0.85rem; }
+.piso[aria-pressed="true"] { outline: 3px solid var(--verde-900); outline-offset: 2px; }
+
+.lista-especies { margin-top: 18px; }
+.ficha-mini {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  background: #fff;
+  border: 1px solid var(--borde);
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+  text-decoration: none;
+  color: var(--texto);
+  min-height: 56px;
+}
+.ficha-mini:hover { border-color: var(--verde-500); }
+.ficha-mini .nombre { font-weight: 700; }
+.ficha-mini .detalle { font-size: 0.85rem; color: #4b5f55; }
+.etiqueta {
+  font-size: 0.78rem;
+  background: var(--verde-100);
+  color: var(--verde-900);
+  border-radius: 999px;
+  padding: 3px 10px;
+  white-space: nowrap;
+}
+
+/* ---------- Ficha de especie ---------- */
+.foto-especie { border-radius: var(--radio); overflow: hidden; margin-bottom: 14px; }
+.nombre-cientifico { font-style: italic; color: #41564b; margin-bottom: 4px; }
+.habitat { margin-bottom: 14px; }
+.seccion-multimedia { margin: 16px 0; }
+.seccion-multimedia h2 { margin-bottom: 8px; }
+audio { width: 100%; }
+video { width: 100%; border-radius: 12px; background: #10281e; }
+
+/* ---------- Quiz ---------- */
+.meta-quiz {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.pregunta { font-size: 1.15rem; font-weight: 700; margin: 18px 0; }
+.opcion {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: var(--verde-100);
+  border: 2px solid transparent;
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  font-size: 1rem;
+  min-height: 52px;
+}
+.opcion:hover { border-color: var(--verde-500); }
+.opcion.correcta { background: var(--verde-500); color: #fff; font-weight: 700; }
+.opcion.incorrecta { background: #e8b4a6; color: #5b2015; }
+.retro {
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin: 14px 0;
+  font-weight: 600;
+}
+.retro.bien { background: var(--verde-100); color: var(--verde-900); }
+.retro.mal { background: #f6e3dd; color: #6b2c1d; }
+[hidden] { display: none !important; }
+
+/* ---------- Navegación inferior ---------- */
+.nav-inferior {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  background: #fff;
+  border-top: 1px solid var(--borde);
+  display: flex;
+  justify-content: space-around;
+  padding: 6px 0 calc(6px + env(safe-area-inset-bottom));
+  z-index: 10;
+}
+.nav-inferior a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  min-width: 64px;
+  min-height: 48px;
+  justify-content: center;
+  text-decoration: none;
+  color: #7b8b81;
+  font-size: 0.78rem;
+  border-radius: 10px;
+}
+.nav-inferior a svg { width: 24px; height: 24px; }
+.nav-inferior a.activo { color: var(--verde-900); font-weight: 700; }
+.nav-inferior a.activo svg { stroke: var(--verde-700); }
+
+/* ---------- Alto contraste / texto grande ---------- */
+body.alto-contraste {
+  --fondo: #0e1f17;
+  --texto: #f4f9f4;
+  --borde: #3d5c4c;
+}
+body.alto-contraste .tarjeta,
+body.alto-contraste .ficha-mini,
+body.alto-contraste .nav-inferior,
+body.alto-contraste .boton-contorno {
+  background: #14291f;
+  color: #f4f9f4;
+}
+body.texto-grande { font-size: 21px; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}

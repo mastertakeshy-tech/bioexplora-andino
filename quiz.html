@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quiz Retos andinos · BioExplora Andino</title>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<header class="barra-superior">Quiz Retos andinos</header>
+
+<main class="contenido">
+  <div class="meta-quiz">
+    <span id="quiz-avance">Pregunta 1 de 5</span>
+    <span>Puntos: <span id="quiz-puntos">0</span></span>
+  </div>
+  <div class="barra-progreso" role="progressbar" aria-label="Avance del quiz" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" id="quiz-barra">
+    <span id="quiz-relleno" style="width:0%"></span>
+  </div>
+
+  <p class="pregunta" id="quiz-pregunta"></p>
+  <div id="quiz-opciones" role="group" aria-label="Opciones de respuesta"></div>
+
+  <div class="retro bien" id="quiz-retro-bien" hidden></div>
+  <div class="retro mal" id="quiz-retro-mal" hidden></div>
+
+  <button class="boton boton-naranja" id="btn-siguiente" type="button" hidden>Siguiente pregunta</button>
+
+  <section class="tarjeta" id="quiz-final" hidden aria-live="polite">
+    <h2>¡Quiz terminado!</h2>
+    <p>Tu puntaje final: <strong><span id="quiz-total">0</span> / 50</strong></p>
+    <br>
+    <button class="boton boton-contorno" id="btn-repetir" type="button">Repetir quiz</button>
+    <a class="boton boton-naranja" href="index.html">Volver al inicio</a>
+  </section>
+</main>
+
+<nav class="nav-inferior" aria-label="Navegación principal">
+  <a href="index.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10.5 12 3l9 7.5V21H3z"/></svg>
+    Inicio
+  </a>
+  <a href="mapa.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+    Mapa
+  </a>
+  <a href="mapa.html#especies">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21C7 17 4 13 4 9a8 8 0 0 1 16 0c0 4-3 8-8 12z" transform="rotate(45 12 12)"/></svg>
+    Especies
+  </a>
+  <a href="quiz.html" class="activo" aria-current="page">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.4 2.3c-.8.35-.9 1-.9 1.7"/><circle cx="12" cy="16.8" r="0.5"/></svg>
+    Quiz
+  </a>
+</nav>
+
+<script src="js/data.js"></script>
+<script src="js/comun.js"></script>
+<script>
+  let actual = 0;
+  let puntos = 0;
+  let respondida = false;
+
+  const elAvance = document.getElementById("quiz-avance");
+  const elPuntos = document.getElementById("quiz-puntos");
+  const elPregunta = document.getElementById("quiz-pregunta");
+  const elOpciones = document.getElementById("quiz-opciones");
+  const retroBien = document.getElementById("quiz-retro-bien");
+  const retroMal = document.getElementById("quiz-retro-mal");
+  const btnSiguiente = document.getElementById("btn-siguiente");
+  const elBarra = document.getElementById("quiz-barra");
+  const elRelleno = document.getElementById("quiz-relleno");
+  const letras = ["A", "B", "C", "D"];
+
+  function pintarPregunta() {
+    const q = QUIZ[actual];
+    respondida = false;
+    elAvance.textContent = "Pregunta " + (actual + 1) + " de " + QUIZ.length;
+    elPregunta.textContent = q.pregunta;
+    elOpciones.innerHTML = "";
+    retroBien.hidden = true;
+    retroMal.hidden = true;
+    btnSiguiente.hidden = true;
+    elRelleno.style.width = (actual / QUIZ.length) * 100 + "%";
+    elBarra.setAttribute("aria-valuenow", actual);
+
+    q.opciones.forEach((texto, i) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "opcion";
+      btn.textContent = letras[i] + ". " + texto;
+      btn.addEventListener("click", () => {
+        if (i === q.correcta) {
+          puntos += 10;
+          elPuntos.textContent = puntos;
+          btn.classList.add("correcta");
+          retroBien.textContent = q.retroalimentacion;
+          retroBien.hidden = false;
+          respondida = true;
+        } else {
+          btn.classList.add("incorrecta");
+          retroMal.textContent = q.incorrecta;
+          retroMal.hidden = false;
+          respondida = true;
+        }
+        btnSiguiente.hidden = false;
+      });
+      elOpciones.appendChild(btn);
+    });
+  }
+
+  btnSiguiente.addEventListener("click", () => {
+    if (actual < QUIZ.length - 1) {
+      actual++;
+      pintarPregunta();
+    } else {
+      document.getElementById("quiz-final").hidden = false;
+      document.getElementById("quiz-total").textContent = puntos;
+      elRelleno.style.width = "100%";
+      elBarra.setAttribute("aria-valuenow", QUIZ.length);
+      const p = obtenerProgreso();
+      p.puntos = puntos;
+      guardarProgreso(p);
+      btnSiguiente.hidden = true;
+      elPregunta.textContent = "";
+      elOpciones.innerHTML = "";
+    }
+  });
+
+  document.getElementById("btn-repetir").addEventListener("click", () => {
+    actual = 0;
+    puntos = 0;
+    elPuntos.textContent = "0";
+    document.getElementById("quiz-final").hidden = true;
+    pintarPregunta();
+  });
+
+  pintarPregunta();
+</script>
+</body>
+</html>

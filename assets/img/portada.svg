@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img">
+<defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#9fd4a3"/><stop offset="1" stop-color="#d8f3dc"/></linearGradient></defs>
+<rect width="800" height="500" fill="url(#sky)"/>
+<polygon points="0,320 160,170 320,320" fill="#9db8a8"/><polygon points="240,320 420,140 600,320" fill="#8aa897"/><polygon points="520,320 680,190 800,300 800,320" fill="#9db8a8"/><polygon points="0,400 220,240 440,400" fill="#547d63"/><polygon points="360,400 600,220 800,390 800,400" fill="#5f8a6d"/><rect y="360" width="800" height="140" fill="#6d9e7e"/><text x="400" y="430" text-anchor="middle" font-family="Verdana,sans-serif" font-size="40" font-weight="bold" fill="#ffffff">Explora la biodiversidad</text><text x="400" y="475" text-anchor="middle" font-family="Verdana,sans-serif" font-size="24" fill="#eaf4ed">de los Andes colombianos</text>
+</svg>

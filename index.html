@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inicio · BioExplora Andino</title>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<header class="barra-superior">Inicio BioExplora</header>
+
+<main class="contenido">
+  <div class="portada">
+    <img src="assets/img/portada.svg" alt="Ilustración de montañas de los Andes colombianos con cielo verde">
+  </div>
+
+  <p class="saludo">Hola, explorador/a</p>
+
+  <a class="boton boton-naranja" href="mapa.html">Comenzar aventura</a>
+  <button class="boton boton-verde" id="btn-continuar" type="button">Continuar donde quedé</button>
+
+  <section class="tarjeta" aria-labelledby="titulo-progreso">
+    <h2 id="titulo-progreso">Tu progreso: <span id="progreso-pct">0</span>%</h2>
+    <div class="barra-progreso" role="progressbar" aria-label="Progreso de especies descubiertas" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="barra-progreso">
+      <span id="barra-relleno" style="width:0%"></span>
+    </div>
+    <p id="progreso-detalle">0 de 8 especies descubiertas</p>
+  </section>
+
+  <section class="tarjeta" aria-labelledby="titulo-accesibilidad">
+    <h2 id="titulo-accesibilidad">Accesibilidad</h2>
+    <p>Contraste, tamaño de texto, subtítulos</p>
+    <br>
+    <button class="boton boton-contorno" id="btn-contraste" type="button" aria-pressed="false">Alto contraste</button>
+    <button class="boton boton-contorno" id="btn-texto" type="button" aria-pressed="false">Texto grande</button>
+  </section>
+</main>
+
+<nav class="nav-inferior" aria-label="Navegación principal">
+  <a href="index.html" class="activo" aria-current="page">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10.5 12 3l9 7.5V21H3z"/></svg>
+    Inicio
+  </a>
+  <a href="mapa.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+    Mapa
+  </a>
+  <a href="mapa.html#especies">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21C7 17 4 13 4 9a8 8 0 0 1 16 0c0 4-3 8-8 12z" transform="rotate(45 12 12)"/></svg>
+    Especies
+  </a>
+  <a href="quiz.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.4 2.3c-.8.35-.9 1-.9 1.7"/><circle cx="12" cy="16.8" r="0.5"/></svg>
+    Quiz
+  </a>
+</nav>
+
+<script src="js/data.js"></script>
+<script src="js/comun.js"></script>
+<script>
+  // Progreso en pantalla
+  const pct = porcentajeProgreso();
+  const vistas = obtenerProgreso().vistas.length;
+  document.getElementById("progreso-pct").textContent = pct;
+  document.getElementById("progreso-detalle").textContent = vistas + " de " + ESPECIES.length + " especies descubiertas";
+  document.getElementById("barra-relleno").style.width = pct + "%";
+  document.getElementById("barra-progreso").setAttribute("aria-valuenow", pct);
+
+  // Botón "Continuar donde quedé"
+  document.getElementById("btn-continuar").addEventListener("click", () => {
+    localStorage.removeItem(CLAVE_PROGRESO);
+    location.href = "mapa.html";
+  });
+
+  // Accesibilidad
+  document.getElementById("btn-contraste").addEventListener("click", (e) => {
+    const activo = document.body.classList.toggle("alto-contraste");
+    e.currentTarget.setAttribute("aria-pressed", activo);
+  });
+  document.getElementById("btn-texto").addEventListener("click", (e) => {
+    const activo = document.body.classList.toggle("texto-grande");
+    e.currentTarget.setAttribute("aria-pressed", activo);
+  });
+</script>
+</body>
+</html>

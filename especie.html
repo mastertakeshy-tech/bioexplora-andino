@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ficha de especie · BioExplora Andino</title>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<header class="barra-superior" id="titulo-pagina">Especies</header>
+
+<main class="contenido" id="ficha">
+  <div class="tarjeta"><p>Cargando especie…</p></div>
+</main>
+
+<nav class="nav-inferior" aria-label="Navegación principal">
+  <a href="index.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10.5 12 3l9 7.5V21H3z"/></svg>
+    Inicio
+  </a>
+  <a href="mapa.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+    Mapa
+  </a>
+  <a href="mapa.html#especies" class="activo" aria-current="page">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21C7 17 4 13 4 9a8 8 0 0 1 16 0c0 4-3 8-8 12z" transform="rotate(45 12 12)"/></svg>
+    Especies
+  </a>
+  <a href="quiz.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.4 2.3c-.8.35-.9 1-.9 1.7"/><circle cx="12" cy="16.8" r="0.5"/></svg>
+    Quiz
+  </a>
+</nav>
+
+<script src="js/data.js"></script>
+<script src="js/comun.js"></script>
+<script>
+  const params = new URLSearchParams(location.search);
+  const esp = ESPECIES.find((e) => e.id === params.get("id")) || ESPECIES[0];
+  const piso = PISOS.find((p) => p.id === esp.piso);
+  const idx = ESPECIES.indexOf(esp);
+  const siguiente = ESPECIES[(idx + 1) % ESPECIES.length];
+
+  marcarEspecieVista(esp.id);
+  document.title = esp.nombre + " · BioExplora Andino";
+  document.getElementById("titulo-pagina").textContent = "Especies: " + esp.nombre;
+
+  let html = "";
+  html += '<div class="foto-especie"><img src="' + esp.img + '" alt="' + esp.alt + '"></div>';
+  html += "<h1>" + esp.nombre + "</h1>";
+  html += '<p class="nombre-cientifico">' + esp.cientifico + "</p>";
+  html += '<p class="habitat">Hábitat: ' + esp.habitat + "</p>";
+  html += '<p><span class="etiqueta">' + esp.tipo + '</span> <span class="etiqueta">' + piso.nombre + '</span> <span class="etiqueta">' + esp.estado + "</span></p><br>";
+  html += "<p>" + esp.descripcion + "</p>";
+
+  if (esp.audio) {
+    html += '<section class="seccion-multimedia" aria-labelledby="t-audio">';
+    html += '<h2 id="t-audio">Escucha</h2>';
+    html += '<audio controls preload="metadata" src="' + esp.audio + '"></audio>';
+    html += "</section>";
+  } else {
+    html += '<section class="seccion-multimedia"><h2>Escucha</h2><div class="tarjeta"><p>Audio no disponible para esta especie.</p></div></section>';
+  }
+
+  if (esp.video) {
+    html += '<section class="seccion-multimedia" aria-labelledby="t-video">';
+    html += '<h2 id="t-video">Mira</h2>';
+    html += '<video controls preload="metadata" poster="' + esp.img + '" src="' + esp.video + '">';
+    if (esp.subtitulos) {
+      html += '<track kind="captions" srclang="es" label="Español" src="' + esp.subtitulos + '" default>';
+    }
+    html += "</video>";
+    html += "</section>";
+  }
+
+  html += '<button class="boton boton-contorno" id="btn-texto-ficha" type="button">Texto: A+</button>';
+  html += '<a class="boton boton-naranja" href="especie.html?id=' + siguiente.id + '">Siguiente</a>';
+
+  document.getElementById("ficha").innerHTML = html;
+</script>
+</body>
+</html>

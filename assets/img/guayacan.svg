@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img">
+<defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#cfe8f3"/><stop offset="1" stop-color="#eef7fb"/></linearGradient></defs>
+<rect width="800" height="500" fill="url(#sky)"/>
+<polygon points="0,320 160,170 320,320" fill="#9db8a8"/><polygon points="240,320 420,140 600,320" fill="#8aa897"/><polygon points="520,320 680,190 800,300 800,320" fill="#9db8a8"/><rect y="360" width="800" height="140" fill="#6d9e7e"/><rect x="385" y="300" width="30" height="110" rx="8" fill="#6b4a2f"/><circle cx="330" cy="240" r="60" fill="#f4c531"/><circle cx="400" cy="200" r="75" fill="#f4c531"/><circle cx="470" cy="240" r="60" fill="#f4c531"/><circle cx="365" cy="275" r="50" fill="#f4c531"/><circle cx="435" cy="275" r="50" fill="#f4c531"/><circle cx="400" cy="255" r="55" fill="#f4c531"/>
+</svg>
